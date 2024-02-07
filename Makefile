@@ -26,4 +26,4 @@ my_Knapsack.o: my_Knapsack.c
 .PHONY: clean all 
 
 clean: 
-	rm -f *.o *.a connections
+	rm -f *.o *.a connections connections0 
