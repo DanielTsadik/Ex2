@@ -14,32 +14,6 @@ void getMatVal(int mat[matSize][matSize]) {
     }
 }
 int helpMat[matSize][matSize];
-
-// this functions uses make_path and then checks if there's a way from i -> j
-int isTherePath (int mat[matSize][matSize], int i, int j){
-    make_path(mat,i,j);
-    if(i == j){
-        return 0;
-    }
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0){
-        return 0;
-    }
-    return 1;
-}
-//sae like isTherePath but now it returns the path
-void shortestPath (int mat[matSize][matSize], int i, int j){
-    if(i == j){
-        printf("-1\n");
-        return;
-    }
-    make_path(mat,i,j);
-    
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0)
-        printf("-1\n");
-    else{
-        printf("%d\n", helpMat[i][j]);
-    }
-}
 void make_path(int mat[matSize][matSize], int i, int j){
     if(i == j){
         printf("-1\n");
@@ -67,4 +41,30 @@ void make_path(int mat[matSize][matSize], int i, int j){
         }
     }
 }
+// this functions uses make_path and then checks if there's a way from i -> j
+int isTherePath (int mat[matSize][matSize], int i, int j){
+    make_path(mat,i,j);
+    if(i == j){
+        return 0;
+    }
+    if(helpMat[i][j] == infinite || helpMat[i][j] == 0){
+        return 0;
+    }
+    return 1;
+}
+//sae like isTherePath but now it returns the path
+void shortestPath (int mat[matSize][matSize], int i, int j){
+    if(i == j){
+        printf("-1\n");
+        return;
+    }
+    make_path(mat,i,j);
+    
+    if(helpMat[i][j] == infinite || helpMat[i][j] == 0)
+        printf("-1\n");
+    else{
+        printf("%d\n", helpMat[i][j]);
+    }
+}
+
 
