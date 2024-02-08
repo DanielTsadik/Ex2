@@ -32,12 +32,12 @@ int knapSack(int weights[], int values[], int selected_bool[]) {
         if (res == dp[i - 1][w])
             continue;
         else {
+            // when backtracking we want to "select" the bag
             selected_bool[i - 1] = 1;
             res -= values[i - 1];
             w -= weights[i - 1];
         }
     }
-
     return dp[MAX_ITEMS][MAX_WEIGHT];
 }
 
@@ -46,7 +46,7 @@ int main() {
     int values[MAX_ITEMS];
     int weights[MAX_ITEMS];
     int selected_bool[MAX_ITEMS] = {0};
- 
+    // get the input from the user
     for(int i = 0; i < MAX_ITEMS; i++)
     scanf(" %c %d %d", &items[i], &values[i], &weights[i]);
 
@@ -61,8 +61,6 @@ int main() {
             printf(" %c", items[i]);
         }
     }
-    // printf("\b\b\n");
-
     return 0;
 }
 
