@@ -46,7 +46,7 @@ void make_path(int mat[matSize][matSize], int i, int j){
         return;
     }
         
-    int helpMat[matSize][matSize];
+    // int helpMat[matSize][matSize];
     for(int k = 0; k < matSize; k++){
         for(int l = 0; l < matSize; l++){
             helpMat[k][l] = mat[k][l];
