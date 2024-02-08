@@ -61,7 +61,6 @@ int main() {
             printf("%c ", items[i]);
         }
     }
-    printf("\b\b\n");
 
     return 0;
 }
