@@ -55,12 +55,13 @@ int main() {
 
     // Display results
     printf("Maximum profit: %d\n", maxProfit);
-    printf("Selected items: ");
+    printf("Selected items:");
     for (int i = 0; i < MAX_ITEMS; i++) {
         if (selected_bool[i] == 1) {
-            printf("%c ", items[i]);
+            printf(" %c", items[i]);
         }
     }
+    // printf("\b\b\n");
 
     return 0;
 }
