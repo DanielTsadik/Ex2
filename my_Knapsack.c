@@ -47,7 +47,6 @@ int main() {
     int weights[MAX_ITEMS];
     int selected_bool[MAX_ITEMS] = {0};
  
-    // printf("Enter items (A B C D E): ");
     for(int i = 0; i < MAX_ITEMS; i++)
         scanf("%c %d %d", &items[i], &values[i], &weights[i]);
 
