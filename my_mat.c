@@ -1,70 +1,59 @@
 #include <stdio.h>
 #include "my_mat.h"
 
-//we suppose that no edge is bigger than 9999999
-#define infinite 9999999
-#define matSize 10
+#define INFINITE  9999999
+#define MAT_SIZE  10
 
-//After being called by A or the Defult we asj from the user input  
-void getMatVal(int mat[matSize][matSize]) {
-    for (int i = 0; i < matSize; i++) { 
-        for (int j = 0; j < matSize; j++) {
+void getMatVal(int mat[MAT_SIZE][MAT_SIZE]) {
+    for (int i =  0; i < MAT_SIZE; i++) {  
+        for (int j =  0; j < MAT_SIZE; j++) {
             scanf("%d", &mat[i][j]);
         }
     }
 }
-int helpMat[matSize][matSize];
-void make_path(int mat[matSize][matSize], int i, int j){
-    if(i == j){
-        printf("-1\n");
-        return;
-    }
-        
-    // int helpMat[matSize][matSize];
-    for(int k = 0; k < matSize; k++){
-        for(int l = 0; l < matSize; l++){
-            helpMat[k][l] = mat[k][l];
+
+int helpMat[MAT_SIZE][MAT_SIZE];
+
+void make_path(int mat[MAT_SIZE][MAT_SIZE]) {
+    // Initialize helpMat with values from mat
+    for (int i =  0; i < MAT_SIZE; i++) {
+        for (int j =  0; j < MAT_SIZE; j++) {
+            helpMat[i][j] = mat[i][j];
         }
     }
-    for(int x = 0; x < matSize; x++){
-        for(int y = 0; y < matSize; y++){
-            if(x != y && helpMat[x][y] == 0)
-                helpMat[x][y] = infinite;
+
+    // Replace  0 with INFINITE in helpMat
+    for (int i =  0; i < MAT_SIZE; i++) {
+        for (int j =  0; j < MAT_SIZE; j++) {
+            if (helpMat[i][j] ==  0) {
+                helpMat[i][j] = INFINITE;
+            }
         }
     }
-    for (int x = 0; x < matSize; x++) {
-        for (int y = 0; y < matSize; y++) {
-            for (int z= 0; z < matSize; z++) {
-                if (helpMat[y][x] + helpMat[x][z] < helpMat[y][z])
-                    helpMat[y][z] = helpMat[y][x] + helpMat[x][z];
+
+    // Implement the Floyd-Warshall algorithm
+    for (int k =  0; k < MAT_SIZE; k++) {
+        for (int i =  0; i < MAT_SIZE; i++) {
+            for (int j =  0; j < MAT_SIZE; j++) {
+                if (helpMat[i][k] != INFINITE && helpMat[k][j] != INFINITE &&
+                    helpMat[i][k] + helpMat[k][j] < helpMat[i][j]) {
+                    helpMat[i][j] = helpMat[i][k] + helpMat[k][j];
+                }
             }
         }
     }
 }
-// this functions uses make_path and then checks if there's a way from i -> j
-int isTherePath (int mat[matSize][matSize], int i, int j){
-    make_path(mat,i,j);
-    if(i == j){
-        return 0;
-    }
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0){
-        return 0;
-    }
-    return 1;
-}
-//sae like isTherePath but now it returns the path
-void shortestPath (int mat[matSize][matSize], int i, int j){
-    if(i == j){
-        printf("-1\n");
-        return;
-    }
-    make_path(mat,i,j);
-    
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0)
-        printf("-1\n");
-    else{
-        printf("%d\n", helpMat[i][j]);
-    }
+
+int isTherePath(int mat[MAT_SIZE][MAT_SIZE], int i, int j) {
+    make_path(mat);
+    return helpMat[i][j] != INFINITE && helpMat[i][j] !=  0;
 }
 
-
+void shortestPath(int mat[MAT_SIZE][MAT_SIZE], int i, int j) {
+    make_path(mat);
+    if (helpMat[i][j] == INFINITE || helpMat[i][j] ==  0) {
+        printf("No path exists.\n");
+    } else {
+        printf("Shortest path distance is %d.\n", helpMat[i][j]);
+    }
+}
