@@ -49,19 +49,19 @@ int main() {
  
     for(int i = 0; i < MAX_ITEMS; i++)
     scanf(" %c %d %d", &items[i], &values[i], &weights[i]);
-    
+
     // Calculate maximum profit and select items
     int maxProfit = knapSack(weights, values, selected_bool);
 
     // Display results
     printf("Maximum profit: %d\n", maxProfit);
-    printf("Items that give the maximum profit: [");
+    printf("Selected items: ");
     for (int i = 0; i < MAX_ITEMS; i++) {
         if (selected_bool[i] == 1) {
-            printf("%c, ", items[i]);
+            printf("%c ", items[i]);
         }
     }
-    printf("\b\b]\n");
+    printf("\b\b\n");
 
     return 0;
 }
