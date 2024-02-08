@@ -1,6 +1,4 @@
-//
-// Created by daniel on 2/6/24.
-//
+
 #include <stdio.h>
 #include "my_mat.h" 
 
@@ -11,10 +9,11 @@ int main(){
     while(c != 'A'){
          scanf("%c", &c);
     }
-
+    //get matrix from the user
     getMatVal(mat);
     while(c != 'D'){
         if(c == 'A')
+            //if A then we want to restart the matrix values and get a new input
             getMatVal(mat);
         if(c == 'B'){
             int i, j;
