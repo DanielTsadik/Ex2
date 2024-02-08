@@ -46,20 +46,10 @@ int main() {
     int values[MAX_ITEMS];
     int weights[MAX_ITEMS];
     int selected_bool[MAX_ITEMS] = {0};
-
-    // Input items, values, and weights
-    printf("Enter items (A B C D E): ");
-    for (int i = 0; i < MAX_ITEMS; i++) {
-        scanf(" %c", &items[i]);
-    }
-    printf("Enter the values of the items:\n");
-    for (int i = 0; i < MAX_ITEMS; i++) {
-        scanf("%d", &values[i]);
-    }
-    printf("Enter the weights of the items:\n");
-    for (int i = 0; i < MAX_ITEMS; i++) {
-        scanf("%d", &weights[i]);
-    }
+ 
+    // printf("Enter items (A B C D E): ");
+    for(int i = 0; i < MAX_ITEMS; i++)
+        scanf("%c %d %d", &items[i], &values[i], &weights[i]);
 
     // Calculate maximum profit and select items
     int maxProfit = knapSack(weights, values, selected_bool);
