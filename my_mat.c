@@ -1,77 +1,64 @@
 #include <stdio.h>
 #include "my_mat.h"
 
+#define INFINITE  9999999
+#define MATRIX_SIZE  10
 
-#define infinite 9999999
-#define matSize 10
-// Created by daniel on 2/4/24.
-
-void getMatVal(int mat[matSize][matSize]) {
-    for (int i = 0; i < matSize; i++) { 
-        for (int j = 0; j < matSize; j++) {
-            scanf("%d", &mat[i][j]);
+void getMatVal(int matrix[MATRIX_SIZE][MATRIX_SIZE]) {
+    for (int row =  0; row < MATRIX_SIZE; row++) {
+        for (int col =  0; col < MATRIX_SIZE; col++) {
+            scanf("%d", &matrix[row][col]);
         }
     }
 }
+int helperMatrix[MATRIX_SIZE][MATRIX_SIZE]; // this is a global matrix which I know to be 
 
-int isTherePath (int mat[matSize][matSize], int i, int j){
-    int helpMat[matSize][matSize];
-    for(int k = 0; k < matSize; k++){
-        for(int l = 0; l < matSize; l++){
-            helpMat[k][l] = mat[k][l];
+int isTherePath(int matrix[MATRIX_SIZE][MATRIX_SIZE], int startIndex, int endIndex) {
+    
+    // Copy the original matrix to the helper matrix
+    for (int row =  0; row < MATRIX_SIZE; row++) {
+        for (int col =  0; col < MATRIX_SIZE; col++) {
+            helperMatrix[row][col] = matrix[row][col];
         }
     }
-    for(int x = 0; x < matSize; x++){
-        for(int y = 0; y < matSize; y++){
-            if(x != y && helpMat[x][y] == 0)
-                helpMat[x][y] = infinite;
-        }
-    }
-    for (int x = 0; x < matSize; x++) {
-        for (int y = 0; y < matSize; y++) {
-            for (int z= 0; z < matSize; z++) {
-
-                if (helpMat[y][x] + helpMat[x][z] < helpMat[y][z])
-                    helpMat[y][z] = helpMat[y][x] + helpMat[x][z];
+    
+    // Initialize the helper matrix with infinite values where the original has zero
+    for (int row =  0; row < MATRIX_SIZE; row++) {
+        for (int col =  0; col < MATRIX_SIZE; col++) {
+            if (row != col && helperMatrix[row][col] ==  0) {
+                helperMatrix[row][col] = INFINITE;
             }
         }
     }
-    if(i == j)
-        return 0;
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0)
-        return 0;
-    return 1;
+    
+    // Apply Floyd-Warshall algorithm to find shortest paths
+    for (int k =  0; k < MATRIX_SIZE; k++) {
+        for (int i =  0; i < MATRIX_SIZE; i++) {
+            for (int j =  0; j < MATRIX_SIZE; j++) {
+                if (helperMatrix[i][k] + helperMatrix[k][j] < helperMatrix[i][j]) {
+                    helperMatrix[i][j] = helperMatrix[i][k] + helperMatrix[k][j];
+                }
+            }
+        }
+    }
+    
+    // Return whether a path exists between start and end index
+    if (startIndex == endIndex) {
+        return  0;
+    }
+    return (helperMatrix[startIndex][endIndex] != INFINITE && helperMatrix[startIndex][endIndex] !=  0);
 }
 
-void shortestPath (int mat[matSize][matSize], int i, int j){
-    if(i == j){
+void shortestPath(int matrix[MATRIX_SIZE][MATRIX_SIZE], int startIndex, int endIndex) {
+    if (startIndex == endIndex) {
         printf("-1\n");
         return;
     }
-
-    int helpMat[matSize][matSize];
-    for(int k = 0; k < matSize; k++){
-        for(int l = 0; l < matSize; l++){
-            helpMat[k][l] = mat[k][l];
-        }
-    }
-    for(int x = 0; x < matSize; x++){
-        for(int y = 0; y < matSize; y++){
-            if(x != y && helpMat[x][y] == 0)
-                helpMat[x][y] = infinite;
-        }
-    }
-    for (int x = 0; x < matSize; x++) {
-        for (int y = 0; y < matSize; y++) {
-            for (int z= 0; z < matSize; z++) {
-                if (helpMat[y][x] + helpMat[x][z] < helpMat[y][z])
-                    helpMat[y][z] = helpMat[y][x] + helpMat[x][z];
-            }
-        }
-    }
-    if(helpMat[i][j] == infinite || helpMat[i][j] == 0)
+    isTherePath(matrix, startIndex, endIndex);
+    int shortestPathValue = helperMatrix[startIndex][endIndex];
+    if (!shortestPathValue || shortestPathValue == INFINITE) {
         printf("-1\n");
-    else{
-        printf("%d\n", helpMat[i][j]);
+    } else {
+        printf("%d\n", shortestPathValue);
     }
 }
