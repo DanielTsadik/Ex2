@@ -18,21 +18,18 @@ int isTherePath(int matrix[MATRIX_SIZE][MATRIX_SIZE], int startIndex, int endInd
     // Copy the original matrix to the helper matrix
     for (int row =  0; row < MATRIX_SIZE; row++) {
         for (int col =  0; col < MATRIX_SIZE; col++) {
-            if (row != col && matrix[row][col] ==  0) {
-                helperMatrix[row][col] = INFINITE
-            } 
             helperMatrix[row][col] = matrix[row][col];
         }
     }
     
     // Initialize the helper matrix with infinite values where the original has zero
-    // for (int row =  0; row < MATRIX_SIZE; row++) {
-    //     for (int col =  0; col < MATRIX_SIZE; col++) {
-    //         if (row != col && helperMatrix[row][col] ==  0) {
-    //             helperMatrix[row][col] = INFINITE;
-    //         }
-    //     }
-    // }
+    for (int row =  0; row < MATRIX_SIZE; row++) {
+        for (int col =  0; col < MATRIX_SIZE; col++) {
+            if (row != col && helperMatrix[row][col] ==  0) {
+                helperMatrix[row][col] = INFINITE;
+            }
+        }
+    }
     
     // Apply Floyd-Warshall algorithm to find shortest paths
     for (int k =  0; k < MATRIX_SIZE; k++) {
